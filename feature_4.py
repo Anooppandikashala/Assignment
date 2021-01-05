@@ -1,17 +1,36 @@
 import csv
+import matplotlib.pyplot as plt
 
 student_db_csv = "student_db_2.csv"
 
 
+def get_all_grades():
+    csv_file_content_l = read_from_file()
+    grades = []
+    for student_detail in csv_file_content_l:
+        if len(student_detail) > 1:
+            grade = int(student_detail[3])
+            grades.append(grade)
+
+    return grades
+
+
+def show_histogram():
+    grades = get_all_grades()
+    plt.hist(grades, density=False, bins=100)
+    plt.ylabel("Grades")
+    plt.xlabel("Students")
+    plt.show()
+
+
 def get_list(line):
-    # print(line)
     list_ = [int(line[0]), line[1], line[2], int(line[3])]
     return list_
 
 
 def write_to_file(fields):
-    with open(student_db_csv, mode='a') as file:
-        writer = csv.writer(file)
+    with open(student_db_csv, mode='a') as file_:
+        writer = csv.writer(file_)
         writer.writerow(fields)
 
 
@@ -48,7 +67,8 @@ def print_menu():
     print("3. Print Topper of a class ")
     print("4. All Student Details ")
     print("5. Sort Student Details ")
-    print("6. Exit ")
+    print("6. Show Histogram ")
+    print("7. Exit ")
     print_line()
 
 
@@ -61,11 +81,11 @@ def add_student():
     write_to_file(writing_fields)
 
 
-def print_as_table(csv_file_content):
+def print_as_table(csv_file_content_l):
     print("{:<8} {:<15} {:<12} {:<10}".format('NUMBER', 'NAME', 'COURSE CODE', 'GRADE'))
     print_line()
 
-    for student_detail in csv_file_content:
+    for student_detail in csv_file_content_l:
         if len(student_detail) > 1:
             student_number = student_detail[0]
             name = student_detail[1]
@@ -115,7 +135,7 @@ def add_student_details():
             break
 
 
-def sortStudentDb(sort_option):
+def sort_student_db(sort_option):
     # with open(student_db_csv, mode='r') as file:
     #     reader = csv.reader(file)
     #     print(reader)
@@ -132,15 +152,15 @@ def sortStudentDb(sort_option):
     print_as_table(reader)
 
 
-def doSorting(sorting_key):
+def do_sorting(sorting_key):
     if sorting_key == 1:
-        sortStudentDb("")
+        sort_student_db("")
     elif sorting_key == 2:
-        sortStudentDb("student_name")
+        sort_student_db("student_name")
     elif sorting_key == 3:
-        sortStudentDb("student_grade")
+        sort_student_db("student_grade")
     elif sorting_key == 4:
-        sortStudentDb("course_code")
+        sort_student_db("course_code")
 
 
 if __name__ == '__main__':
@@ -164,7 +184,10 @@ if __name__ == '__main__':
         elif choice == 5:
             print_sort_menu()
             sort_key = int(raw_input("Select a Sorting option :"))
-            doSorting(sort_key)
+            do_sorting(sort_key)
+            continue
+        elif choice == 6:
+            show_histogram()
             continue
         else:
             break
