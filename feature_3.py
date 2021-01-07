@@ -17,7 +17,7 @@ def write_to_file(fields):
 
 def read_from_file():
     csv_file = []
-    with open(student_db_csv, mode='rU') as file_:
+    with open(student_db_csv, mode='r') as file_:
         file_content = csv.reader(file_)
         index = 0
         for line in file_content:
@@ -53,10 +53,10 @@ def print_menu():
 
 
 def add_student():
-    student_number = int(raw_input("Enter a student Number :"))
-    student_name = raw_input('Enter a Student Name :')
-    course_code = raw_input("Enter the Course Code :")
-    student_grade = int(raw_input('Enter the Grade :'))
+    student_number = int(input("Enter a student Number :"))
+    student_name = input('Enter a Student Name :')
+    course_code = input("Enter the Course Code :")
+    student_grade = int(input('Enter the Grade :'))
     writing_fields = [student_number, student_name, course_code, student_grade]
     write_to_file(writing_fields)
 
@@ -105,12 +105,12 @@ def calculate_average_grade():
 
 
 def add_student_details():
-    key = raw_input('Do you want to add student? (Y/N) ')
+    key = input('Do you want to add student? (Y/N) ')
     if key == 'N' or key == 'n':
         return
     while True:
         add_student()
-        key = raw_input('Do you want to add more students? (Y/N) ')
+        key = input('Do you want to add more students? (Y/N) ')
         if key == 'N' or key == 'n':
             break
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
     while True:
         print_menu()
-        choice = int(raw_input("Select an option : "))
+        choice = int(input("Select an option : "))
         if choice == 1:
             add_student_details()
             continue
@@ -163,7 +163,7 @@ if __name__ == '__main__':
             continue
         elif choice == 5:
             print_sort_menu()
-            sort_key = int(raw_input("Select a Sorting option :"))
+            sort_key = int(input("Select a Sorting option :"))
             doSorting(sort_key)
             continue
         else:
